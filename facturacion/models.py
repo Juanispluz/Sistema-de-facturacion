@@ -1,3 +1,58 @@
 from django.db import models
 
 # Create your models here.
+from django.db import models
+from django.core.validators import MinValueValidator, MaxValueValidator
+
+
+# Create your models here.
+class Usuario(models.Model):
+        cedula = models.IntegerField() 
+        nombre = models.CharField(max_length=100)
+        apellido = models.CharField(max_length=100)
+        celular = models.CharField(max_length=100)
+        direccion= models.CharField(max_length=254)
+
+class Servicios(models.Model):
+    # ForeignKey para relacionar con Usuario
+    usuario_ID = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+
+    agua =  models.BooleanField(default=False)
+    luz = models.BooleanField(default=False)
+    gas = models.BooleanField(default=False)
+    internet = models.BooleanField(default=False)
+    telefonia = models.BooleanField(default=False)
+    cable = models.BooleanField(default=False)
+
+class Contrato(models.Model):
+    # ForeignKey para relacionar con Usuario
+    servicios_ID = models.ForeignKey(Servicios, on_delete=models.CASCADE)
+
+    estado = models.PositiveSmallIntegerField(
+        default=0,
+        validators=[MinValueValidator(0), MaxValueValidator(3)]  # Limita los valores entre 0 y 3
+    )
+    fecha_contrato = models.DateField(help_text="Fecha del inicio del contrato")
+
+class Factura(models.Model):
+    # ForeignKey para relacionar con Usuario
+    contrato_ID = models.ForeignKey(Contrato, on_delete=models.CASCADE)
+
+    fecha_emision = models.DateField(help_text="Fecha de emision de la factura")
+    fecha_vencimineto = models.DateField(help_text="Fecha de vencimiento de la factura")
+    valor = models.BigIntegerField(default=0)
+    estado =  models.PositiveSmallIntegerField(
+        default=0,
+        validators=[MinValueValidator(0), MaxValueValidator(3)]  # Limita los valores entre 0 y 3
+    )
+
+class Pago(models.Model):
+    # ForeignKey para relacionar con Usuario
+    factura_ID = models.ForeignKey(Factura, on_delete=models.CASCADE)
+
+    metodo_pago = models.PositiveSmallIntegerField(
+        default=0,
+        validators=[MinValueValidator(0), MaxValueValidator(10)]  # Limita los valores entre 0 y 10
+    )
+    verificacion = models.BooleanField(default=False)
+    fecha_pago = models.DateField(help_text="Fecha del pago de la factura")
