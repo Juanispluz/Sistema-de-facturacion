@@ -7,7 +7,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 
 # Create your models here.
 class Usuario(models.Model):
-        cedula = models.IntegerField() 
+        cedula = models.IntegerField(primary_key=True) 
         nombre = models.CharField(max_length=100)
         apellido = models.CharField(max_length=100)
         celular = models.CharField(max_length=100)
@@ -15,7 +15,7 @@ class Usuario(models.Model):
 
 class Servicios(models.Model):
     # ForeignKey para relacionar con Usuario
-    usuario_ID = models.ForeignKey(Usuario, on_delete=models.CASCADE)
+    usuario_ID = models.ForeignKey(Usuario, on_delete=models.CASCADE, to_field='cedula')
 
     agua =  models.BooleanField(default=False)
     luz = models.BooleanField(default=False)

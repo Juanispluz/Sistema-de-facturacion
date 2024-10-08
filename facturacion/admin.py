@@ -3,7 +3,7 @@ from .models import *
 
 # Register your models here.
 class UsuarioAdmin(admin.ModelAdmin):
-    list_display = ["id", "cedula", "nombre", "apellido", "celular", "direccion"]
+    list_display = ["cedula", "nombre", "apellido", "celular", "direccion"]
 
 class ServiciosAdmin(admin.ModelAdmin):
     list_display = ["id", "usuario_ID", "agua", "luz", "gas", "internet", "telefonia", "cable"]
