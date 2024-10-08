@@ -28,10 +28,13 @@ class Contrato(models.Model):
     # ForeignKey para relacionar con Usuario
     servicios_ID = models.ForeignKey(Servicios, on_delete=models.CASCADE)
 
-    estado = models.PositiveSmallIntegerField(
-        default=0,
-        validators=[MinValueValidator(0), MaxValueValidator(3)]  # Limita los valores entre 0 y 3
+    C_ESTADO = (
+        (1, "Activo"),
+        (2, "Supendido"),
+        (3, "Inactivo"),
+        (4, "Finalizado")
     )
+    estado = models.IntegerField(choices=C_ESTADO)
     fecha_contrato = models.DateField(help_text="Fecha del inicio del contrato")
 
 class Factura(models.Model):
@@ -41,10 +44,13 @@ class Factura(models.Model):
     fecha_emision = models.DateField(help_text="Fecha de emision de la factura")
     fecha_vencimineto = models.DateField(help_text="Fecha de vencimiento de la factura")
     valor = models.BigIntegerField(default=0)
-    estado =  models.PositiveSmallIntegerField(
-        default=0,
-        validators=[MinValueValidator(0), MaxValueValidator(3)]  # Limita los valores entre 0 y 3
+
+    C_FACTURA = (
+        (1, "Pagada"),
+        (2, "Pendiente"),
+        (3, "Vencida")
     )
+    estado =  models.IntegerField(choices=C_FACTURA)
 
 class Pago(models.Model):
     # ForeignKey para relacionar con Usuario
