@@ -10,6 +10,11 @@ class Usuario(models.Model):
         apellido = models.CharField(max_length=100)
         celular = models.CharField(max_length=100)
         direccion= models.CharField(max_length=254)
+        ROLES = (
+            ('A', 'Administrador'),
+            ('U', 'Usuario')
+        )
+        rol = models.CharField(max_length=1, choices=ROLES, default='U')
 
 class Servicios(models.Model):
     # ForeignKey para relacionar con Usuario
