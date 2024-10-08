@@ -5,7 +5,8 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 
 # Create your models here.
 class Usuario(models.Model):
-        cedula = models.IntegerField(primary_key=True) 
+        cedula = models.IntegerField(primary_key=True)
+        password = models.CharField(max_length=254) 
         nombre = models.CharField(max_length=100)
         apellido = models.CharField(max_length=100)
         celular = models.CharField(max_length=100)
