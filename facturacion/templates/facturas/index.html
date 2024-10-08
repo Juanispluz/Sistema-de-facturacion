@@ -7,5 +7,37 @@
 </head>
 <body>
     OK
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Agua</th>
+                <th>Luz</th>
+                <th>Gas</th>
+                <th>Internet </th>
+                <th>Telefonía</th>
+                <th>Cable</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for i in facturas %}
+                <tr>
+                    <td>{{ i.usuario_ID }}</td>
+                    <td>{{ i.agua }}</td>
+                    <td>{{ i.luz }}</td>
+                    <td>{{ i.gas }}</td>
+                    <td>{{ i.internet }}</td>
+                    <td>{{ i.telefonia }}</td>
+                    <td>{{ i.cable }}}</td>
+                    <!-- <td>{{ i.t_texto }}</td> -->
+                    <!-- <td>{{ i.get_a_estudio_display }}</td> -->
+                    <!-- <td>{{ i.a_estudio }}</td> -->
+                    <td>
+                        
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </body>
 </html>

@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages
+from .models import *
 
 
 # Create your views here.
@@ -15,5 +16,8 @@ def administrador(request):
 
 
 # Facturas - Usuarios
-def ver_facturas(request):
+def ver_servicios(request):
+    query = Servicios.objects.all()
+    messages.info(request, "La consulta esta ok")
+    contexto = {"servicios": query}
     return render(request, "facturas/index.html")

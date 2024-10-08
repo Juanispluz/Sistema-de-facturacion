@@ -12,5 +12,5 @@ urlpatterns = [
 
 
     # Facturas - Usuarios
-    path("facturas/", views.ver_facturas, name="ver_facturas"),
+    path("facturas/", views.ver_servicios, name="ver_servicios"),
 ]
