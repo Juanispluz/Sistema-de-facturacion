@@ -8,9 +8,17 @@ urlpatterns = [
     path("", views.index, name="index"),
 
     # Admin
-    path("administrador/", views.administrador, name="administrador"),
+    path("admon/", views.administrador, name="administrador"),
 
+    # Login
+    path("login/", views.login, name="login"),
+    path("register/", views.register, name="register"),
+    path("logout/", views.logout, name="logout"),
+
+    # Usuario
+    path("usuario/", views.usuario, name="usuario"),
 
     # Facturas - Usuarios
-    path("facturas/", views.ver_servicios, name="ver_servicios"),
+    path("facturas/<int:servicio_ID>/", views.ver_facturas, name="ver_facturas"),
+    path('pagar_facturas/<int:servicio_id>/', views.pagar_facturas, name='pagar_facturas'),
 ]

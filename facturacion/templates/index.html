@@ -3,9 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Servicios Públicos</title>
 </head>
 <body>
-    Melgo Ayuda
+    <h1>Servicios Públicos</h1>
+
+    {% if request.session.logueado %}
+    <a href="{% url 'usuario' %}"><button>Ver perfil</button></a>
+    <a href="{% url 'logout' %}"><button>Cerrar sesión</button></a>
+    <h1>Bienvenido, {{ request.session.logueado.nombre }}</h1>
+    {% endif %}
+
+    {% if servicios_activos %}
+    <h2>Tus servicios activos</h2>
+    <ul>
+        {% for servicio in servicios_activos %}
+        <li>
+            <a href="{% url 'ver_facturas' servicio.servicios_ID.id %}">
+                {{ servicio.servicios_ID.nombre_servicio }}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    {% if servicios_inactivos %}
+    <h2>Tus servicios inactivos</h2>
+    <ul>
+        {% for servicio in servicios_inactivos %}
+        <li>
+            <a href="{% url 'ver_facturas' servicio.servicios_ID.id %}">
+                {{ servicio.servicios_ID.nombre_servicio }} (Inactivo)
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    {% if sin_servicios %}
+    <h3>Hola, no tienes ningún servicio. ¿Deseas contratar uno de nuestros servicios?</h3>
+    {% endif %}
+
 </body>
 </html>

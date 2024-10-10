@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ver Facturas</title>
+</head>
+<body>
+    <h1>Facturas del Servicio</h1>
+
+    {% if facturas %}
+        <ul>
+            {% for factura in facturas %}
+                <li>
+                    Fecha de emisión: {{ factura.fecha_emision }} - 
+                    Valor: {{ factura.valor }} - 
+                    Estado: 
+                    {% if factura.estado == 'PE' %}
+                        Pendiente
+                    {% elif factura.estado == 'P' %}
+                        Pagado
+                    {% else %}
+                        {{ factura.estado }}
+                    {% endif %}
+                    <!-- Aquí extraemos el servicio ID -->
+                    <a href="{% url 'pagar_facturas' factura.servicio_ID.id %}">
+                        <button>Pagar Factura</button>
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No tienes facturas disponibles para este servicio.</p>
+    {% endif %}
+
+    <br>
+    <a href="{% url 'index' %}"><button>Inicio</button></a>  <!-- Botón de inicio -->
+
+</body>
+</html>

@@ -2,23 +2,27 @@ from django.contrib import admin
 from .models import *
 
 # Register your models here.
-class UsuarioAdmin(admin.ModelAdmin):
+class Usuario_Admin(admin.ModelAdmin):
     list_display = ["cedula", "nombre", "apellido", "celular", "direccion", 'rol']
 
-class ServiciosAdmin(admin.ModelAdmin):
-    list_display = ["usuario_ID", "agua", "luz", "gas", "internet", "telefonia", "cable"]
+class Servicios_Admin(admin.ModelAdmin):
+    list_display = ["id", "nombre_servicio"]
 
-class ContratoAdmin(admin.ModelAdmin):
-    list_display = ["id", "servicios_ID", "estado", "fecha_contrato"]
+class Usuarios_servicios_Admin(admin.ModelAdmin):
+    list_display = ["id", "usuario_ID", "servicios_ID", "tiene_servicio"]
 
-class FacturaAdmin(admin.ModelAdmin):
-    list_display = ["id", "contrato_ID", "fecha_emision", "fecha_vencimineto", "valor", "estado"]
+class Contratos_Admin(admin.ModelAdmin):
+    list_display = ["id", "usuario_ID", "usuarios_servicios_ID", "estado", "fecha_contrato"]
 
-class PagoAdmin(admin.ModelAdmin):
-    list_display = ["id", "factura_ID", "metodo_pago", "verificacion", "fecha_pago"]
+class Facturas_Admin(admin.ModelAdmin):
+    list_display = ["id", "usuario_ID", "servicio_ID", "fecha_emision", "fecha_vencimiento", "valor", "estado"]
 
-admin.site.register(Usuario, UsuarioAdmin)
-admin.site.register(Servicios, ServiciosAdmin)
-admin.site.register(Contrato, ContratoAdmin)
-admin.site.register(Factura, FacturaAdmin)
-admin.site.register(Pago, PagoAdmin)
+class Historial_facturas_Admin(admin.ModelAdmin):
+    list_display = ["id", "usuario_ID", "facturas_ID", "valor", "metodo_pago", "fecha_pago"]
+
+admin.site.register(Usuario, Usuario_Admin)
+admin.site.register(Servicios, Servicios_Admin)
+admin.site.register(Usuarios_servicios, Usuarios_servicios_Admin)
+admin.site.register(Contratos, Contratos_Admin)
+admin.site.register(Facturas, Facturas_Admin)
+admin.site.register(Historial_facturas, Historial_facturas_Admin)
