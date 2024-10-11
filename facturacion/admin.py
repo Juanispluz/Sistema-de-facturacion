@@ -12,10 +12,10 @@ class Usuarios_servicios_Admin(admin.ModelAdmin):
     list_display = ["id", "usuario_ID", "servicios_ID", "tiene_servicio"]
 
 class Contratos_Admin(admin.ModelAdmin):
-    list_display = ["id", "usuario_ID", "usuarios_servicios_ID", "estado", "fecha_contrato"]
+    list_display = ["numero_contrato", "usuario_ID", "estado", "fecha_contrato"]
 
 class Facturas_Admin(admin.ModelAdmin):
-    list_display = ["id", "usuario_ID", "servicio_ID", "fecha_emision", "fecha_vencimiento", "valor", "estado"]
+    list_display = ["id", "servicio_ID", "numero_contrato_ID", "fecha_emision", "fecha_vencimiento", "estado", "valor"]
 
 class Historial_facturas_Admin(admin.ModelAdmin):
     list_display = ["id", "usuario_ID", "facturas_ID", "valor", "metodo_pago", "fecha_pago"]

@@ -7,34 +7,36 @@
 </head>
 <body>
     <h1>Facturas del Servicio</h1>
+    <a href="{% url 'index' %}"><button>Inicio</button></a>
+    <a href="{% url 'usuario' %}"><button>Ver perfil</button></a>
+    <a href="{% url 'logout' %}"><button>Cerrar sesión</button></a>
 
     {% if facturas %}
         <ul>
             {% for factura in facturas %}
                 <li>
-                    Fecha de emisión: {{ factura.fecha_emision }} - 
-                    Valor: {{ factura.valor }} - 
-                    Estado: 
+                    <strong>Fecha de emisión:</strong> {{ factura.fecha_emision }} - 
+                    <strong>Fecha de vencimiento:</strong> {{ factura.fecha_vencimiento }} - 
+                    <strong>Valor:</strong> {{ factura.valor }} - 
+                    <strong>Estado:</strong> 
                     {% if factura.estado == 'PE' %}
                         Pendiente
-                    {% elif factura.estado == 'P' %}
-                        Pagado
+                    {% elif factura.estado == 'V' %}
+                        Vencida
                     {% else %}
-                        {{ factura.estado }}
+                        {{ factura.get_estado_display }}
                     {% endif %}
-                    <!-- Aquí extraemos el servicio ID -->
-                    <a href="{% url 'pagar_facturas' factura.servicio_ID.id %}">
-                        <button>Pagar Factura</button>
-                    </a>
+                    
+                    {% if factura.estado != 'P' %}
+                        <a href="{% url 'pagar_facturas' factura.servicio_ID.id %}">
+                            <button>Pagar Factura</button>
+                        </a>
+                    {% endif %}
                 </li>
             {% endfor %}
         </ul>
     {% else %}
         <p>No tienes facturas disponibles para este servicio.</p>
     {% endif %}
-
-    <br>
-    <a href="{% url 'index' %}"><button>Inicio</button></a>  <!-- Botón de inicio -->
-
 </body>
 </html>

@@ -21,4 +21,6 @@ urlpatterns = [
     # Facturas - Usuarios
     path("facturas/<int:servicio_ID>/", views.ver_facturas, name="ver_facturas"),
     path('pagar_facturas/<int:servicio_id>/', views.pagar_facturas, name='pagar_facturas'),
+    path("historial/", views.historial_facturas, name='historial'),
+    path("contrato/", views.contrato, name="contratos"),
 ]

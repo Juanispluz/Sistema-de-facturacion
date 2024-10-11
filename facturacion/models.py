@@ -1,8 +1,5 @@
-# Create your models here.
 from django.db import models
-from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth.hashers import make_password
-
 
 class Usuario(models.Model):
     cedula = models.IntegerField(primary_key=True)
@@ -17,27 +14,10 @@ class Usuario(models.Model):
     )
     rol = models.CharField(max_length=1, choices=ROLES, default='U')
 
-    # Antes de guardar la clave la hashea/encripta
-    def save(self, *args, **kwargs):
-        self.password = make_password(self.password)
-        super().save(*args, **kwargs)
-
-
-class Servicios(models.Model):
-    nombre_servicio = models.CharField(max_length=50)
-
-
-class Usuarios_servicios(models.Model):
-    usuario_ID = models.ForeignKey(Usuario, on_delete=models.CASCADE, to_field='cedula')
-    servicios_ID = models.ForeignKey(Servicios, on_delete=models.CASCADE)
-    tiene_servicio = models.BooleanField(default=False)
-
-
 class Contratos(models.Model):
-    # ForeignKey
+    numero_contrato = models.AutoField(primary_key=True)  # Cambia a AutoField para generar automáticamente el número
     usuario_ID = models.ForeignKey(Usuario, on_delete=models.CASCADE, to_field='cedula')
-    usuarios_servicios_ID = models.ForeignKey(Servicios, on_delete=models.CASCADE)
-
+    
     C_ESTADO = (
         ('A', "Activo"),
         ('I', "Inactivo"),
@@ -47,27 +27,38 @@ class Contratos(models.Model):
     fecha_contrato = models.DateField(help_text="Fecha del contrato")
 
 
-class Facturas(models.Model):
-    # ForeignKey
+class Servicios(models.Model):
+    id = models.AutoField(primary_key=True)  # Cambia a AutoField
+    nombre_servicio = models.CharField(max_length=50)
+
+
+class Usuarios_servicios(models.Model):
+    id = models.AutoField(primary_key=True)  # Cambia a AutoField
     usuario_ID = models.ForeignKey(Usuario, on_delete=models.CASCADE, to_field='cedula')
+    servicios_ID = models.ForeignKey(Servicios, on_delete=models.CASCADE)
+    tiene_servicio = models.BooleanField(default=False)
+
+
+class Facturas(models.Model):
+    id = models.AutoField(primary_key=True)  # Cambia a AutoField
     servicio_ID = models.ForeignKey(Servicios, on_delete=models.CASCADE)
-
-    fecha_emision = models.DateField(help_text="Fecha de emision de la factura")
+    numero_contrato_ID = models.ForeignKey(Contratos, on_delete=models.CASCADE)  # Cambiado a FK de Contratos
+    fecha_emision = models.DateField(help_text="Fecha de emisión de la factura")
     fecha_vencimiento = models.DateField(help_text="Fecha de vencimiento de la factura")
-    valor = models.DecimalField(default=0, max_digits=20, decimal_places=2)
-
+    
     C_FACTURA = (
         ('P', "Pagada"),
         ('PE', "Pendiente"),
         ('V', "Vencida")
     )
     estado = models.CharField(max_length=2, choices=C_FACTURA, default='PE')
+    valor = models.DecimalField(default=0, max_digits=20, decimal_places=2)
 
 
 class Historial_facturas(models.Model):
-    # ForeignKey para relacionar con Usuario
+    id = models.AutoField(primary_key=True)  # Cambia a AutoField
     usuario_ID = models.ForeignKey(Usuario, on_delete=models.CASCADE, to_field='cedula')
-    facturas_ID = models.ForeignKey(Facturas, on_delete=models.CASCADE,)
+    facturas_ID = models.ForeignKey(Facturas, on_delete=models.CASCADE)
     valor = models.DecimalField(default=0, max_digits=20, decimal_places=2)
 
     M_PAGO = (

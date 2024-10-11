@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contratar Servicios</title>
+</head>
+<body>
+    <a href="{% url 'index' %}"><button>Inicio</button></a>
+    <a href="{% url 'logout' %}"><button>Cerrar sesión</button></a>
+
+    <h1>Contratar Servicios</h1>
+    
+
+    {% if request.session.logueado %}
+        <h2>Bienvenido, {{ request.session.logueado.nombre }}</h2>
+        
+        <h3>Servicios Adquiridos:</h3>
+        <ul>
+            {% for servicio in servicios_usuario %}
+                <li>{{ servicio.servicios_ID.nombre_servicio }}</li>
+            {% empty %}
+                <li>No tienes servicios adquiridos.</li>
+            {% endfor %}
+        </ul>
+
+        <h3>Servicios Disponibles:</h3>
+        {% if servicios_disponibles %}
+            <form method="POST">
+                {% csrf_token %}
+                <ul>
+                    {% for servicio in servicios_disponibles %}
+                        <li>
+                            <label>
+                                <input type="checkbox" name="servicios" value="{{ servicio.id }}">
+                                {{ servicio.nombre_servicio }}
+                            </label>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <button type="submit">Contratar Servicios</button>
+            </form>
+        {% else %}
+            <p>No hay servicios disponibles para contratar.</p>
+        {% endif %}
+    {% else %}
+        <p>Por favor, inicie sesión para gestionar sus servicios.</p>
+    {% endif %}
+    <br>
+    <button>Cancelar servicios</button>
+    
+</body>
+</html>

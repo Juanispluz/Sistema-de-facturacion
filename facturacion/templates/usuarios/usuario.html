@@ -6,16 +6,33 @@
     <title>Información del Usuario</title>
 </head>
 <body>
+    <a href="{% url 'index' %}"><button>Inicio</button></a>
+    <a href="{% url 'logout' %}"><button>Cerrar sesión</button></a>
     <h1>Información del Usuario</h1>
 
-    {% if request.session.logueado %}
-        <h2>Bienvenido, {{ usuario.nombre }} {{ usuario.apellido }}</h2>
-        <p><strong>Cédula:</strong> {{ usuario.cedula }}</p>
-        <p><strong>Celular:</strong> {{ usuario.celular }}</p>
-        <p><strong>Dirección:</strong> {{ usuario.direccion }}</p>
+    <h2>Bienvenido, {{ usuario.nombre }} {{ usuario.apellido }}</h2>
+    <p><strong>Cédula:</strong> {{ usuario.cedula }}</p>
+    <p><strong>Celular:</strong> {{ usuario.celular }}</p>
+    <p><strong>Dirección:</strong> {{ usuario.direccion }}</p>
+    
+    <p><strong>Estado del contrato:</strong>
+        {% if contratos %}
+            {% if contratos.tipo == 'R' %}
+                Reportado
+            {% elif contratos.tipo == 'A' %}
+                Activo
+            {% elif contratos.tipo == 'I' %}
+                Inactivo
+            {% else %}
+                {{ contratos.estado }} 
+            {% endif %}
+        {% else %}
+            No hay contrato asociado.
+        {% endif %}
+    </p>
 
-        <a href="#"><button>Cambiar contraseña</button></a>
-        <a href="{% url 'logout' %}"><button>Cerrar sesión</button></a>
-    {% endif %}
+    <a href="#"><button>Cambiar contraseña</button></a>
+    <a href="#"><button>Eliminar cuenta</button></a>
+
 </body>
 </html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial de Facturas</title>
+</head>
+<body>
+    <h1>Historial de Facturas Pagadas</h1>
+    <a href="{% url 'index' %}"><button>Inicio</button></a>
+    <a href="{% url 'usuario' %}"><button>Ver perfil</button></a>
+    <a href="{% url 'logout' %}"><button>Cerrar sesión</button></a>
+
+    {% if historiales %}
+        <ul>
+            {% for historial in historiales %}
+                <li>
+                    <strong>Valor pagado:</strong> {{ historial.valor }} <br>
+                    <strong>Método de pago:</strong> {{ historial.get_metodo_pago_display }} <br>
+                    <strong>Fecha de pago:</strong> {{ historial.fecha_pago }} <br>
+                    <strong>Factura original:</strong><br>
+                    - Fecha de emisión: {{ historial.facturas_ID.fecha_emision }} <br>
+                    - Fecha de vencimiento: {{ historial.facturas_ID.fecha_vencimiento }} <br>
+                    <strong>Servicio:</strong> {{ historial.facturas_ID.servicio_ID.nombre_servicio }} <br>
+                </li>
+                <hr>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No tienes facturas pagadas.</p>
+    {% endif %}
+
+    <br>
+    <a href="{% url 'index' %}"><button>Inicio</button></a>
+</body>
+</html>

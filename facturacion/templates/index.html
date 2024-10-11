@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,11 +8,11 @@
 <body>
     <h1>Servicios Públicos</h1>
 
-    {% if request.session.logueado %}
+    <a href="{% url 'historial' %}"><button>Historial de facturas</button></a>
+    <a href="{% url 'contratos' %}"><button>Servicios</button></a>
     <a href="{% url 'usuario' %}"><button>Ver perfil</button></a>
     <a href="{% url 'logout' %}"><button>Cerrar sesión</button></a>
     <h1>Bienvenido, {{ request.session.logueado.nombre }}</h1>
-    {% endif %}
 
     {% if servicios_activos %}
     <h2>Tus servicios activos</h2>
@@ -25,6 +25,8 @@
         </li>
         {% endfor %}
     </ul>
+    {% else %}
+        <h3>No tienes servicios activos.</h3>
     {% endif %}
 
     {% if servicios_inactivos %}
@@ -38,10 +40,13 @@
         </li>
         {% endfor %}
     </ul>
+    {% else %}
+        <h3>No tienes servicios inactivos.</h3>
     {% endif %}
 
     {% if sin_servicios %}
-    <h3>Hola, no tienes ningún servicio. ¿Deseas contratar uno de nuestros servicios?</h3>
+        <h3>Hola, no tienes ningún servicio. ¿Deseas contratar uno de nuestros servicios?</h3>
+        <a href="{% url 'contratos' %}"><button>Contratar servicios</button></a>
     {% endif %}
 
 </body>
